@@ -1,0 +1,177 @@
+\documentclass{beamer}
+\usepackage{ctex, hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{listings} %c++插入代码
+\lstset{language=C++}%这条命令可以让LaTeX排版时将C++键字突出显示
+\lstset{breaklines}%这条命令可以让LaTeX自动将长的代码行换行排版
+%\lstset{extendedchars=false}%这一条命令可以解决代码跨页时，章节标题，页眉等汉字不显示的问题
+% \usepackage{animate}
+\usepackage{verbatim} %批量注释
+\newcommand{\SubItem}[1]{
+    {\setlength\itemindent{10pt} \item[-] #1}
+}
+
+
+
+% other packages
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,pstricks,listings,stackengine}
+
+\author{{王佳琪}}
+\title{Introduction to OpenFOAM Programming}
+\subtitle{01 - C++数据结构+算法}
+\institute{\kaishu{上海交通大学}}
+\date{\kaishu{2022年1月}}
+\usepackage{WUT}
+
+% defs
+\def\cmd#1{\texttt{\color{red}\footnotesize $\backslash$#1}}
+\def\env#1{\texttt{\color{blue}\footnotesize #1}}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},    % Custom highlighting style
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+
+\begin{document}
+
+\songti
+\begin{frame}
+    \titlepage
+    \begin{figure}[htpb]
+        \begin{center}
+            \includegraphics[width=0.15\linewidth]{pic/WUT.png}
+        \end{center}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+\end{frame}
+
+
+
+
+
+%%~~~~~~~~~~~~~~~~~~~~~正文~~~~~~~~~~~~~~~~~~%%
+
+\section{什么是数据结构？}
+
+\include{01-datastruct/00-dataStruct/01-memory}
+\include{01-datastruct/00-dataStruct/02-iterator}
+\include{01-datastruct/00-dataStruct/00-dataStruct}
+\include{01-datastruct/00-dataStruct/03-线性数据结构}
+\include{01-datastruct/00-dataStruct/04-非线性数据结构}
+
+
+\section{什么是算法？}
+\include{01-datastruct/00-algorithm/00-排序}
+% \include{01-datastruct/00-algorithm/00-搜索}
+\include{01-datastruct/00-algorithm/01-图解算法}
+
+
+
+
+\section{线性数据结构}
+\subsection{01-vector}
+\include{01-datastruct/01-vector/00-array}
+\include{01-datastruct/01-vector/01-constructor}
+\include{01-datastruct/01-vector/02-assign}
+\include{01-datastruct/01-vector/03-at}
+\include{01-datastruct/01-vector/04-back}
+\include{01-datastruct/01-vector/05-begin}
+\include{01-datastruct/01-vector/06-capacity}
+\include{01-datastruct/01-vector/07-cend}
+\include{01-datastruct/01-vector/08-clear}
+\include{01-datastruct/01-vector/09-crbegin}
+\include{01-datastruct/01-vector/10-data}
+\include{01-datastruct/01-vector/11-emplace}
+\include{01-datastruct/01-vector/12-emplace_back}
+\include{01-datastruct/01-vector/13-empty}
+\include{01-datastruct/01-vector/14-erase}
+\include{01-datastruct/01-vector/15-front}
+\include{01-datastruct/01-vector/16-get_allocator}
+\include{01-datastruct/01-vector/17-insert}
+\include{01-datastruct/01-vector/18-operator=}
+\include{01-datastruct/01-vector/19-operator[]}
+\include{01-datastruct/01-vector/20-pop_back}
+\include{01-datastruct/01-vector/21-reserve}
+\include{01-datastruct/01-vector/22-resize}
+\include{01-datastruct/01-vector/23-shrink_to_fit}
+\include{01-datastruct/01-vector/24-size}
+\include{01-datastruct/01-vector/25-swap}
+
+
+
+\subsection{02-List}
+\include{01-datastruct/02-list/00-list}
+\include{01-datastruct/02-list/01-constructor}
+% \include{01-datastruct/02-list/02-assign}
+% \include{01-datastruct/02-list/03-insert}
+% \include{01-datastruct/02-list/04-swap}
+% \include{01-datastruct/02-list/05-emplace_back}
+% \include{01-datastruct/02-list/05-emplace_front}
+% % 条件判断成员函数，在list上线性效率。
+% \include{01-datastruct/02-list/06-sort} %NlogN
+% \include{01-datastruct/02-list/07-merge}
+% \include{01-datastruct/02-list/08-remove}
+% \include{01-datastruct/02-list/08-remove_if}
+% \include{01-datastruct/02-list/09-splice}
+% \include{01-datastruct/02-list/10-reverse}
+
+
+% \subsection{03-forwardList}
+% \include{01-datastruct/03-forwordlist/00-forwardlist}
+% \include{01-datastruct/03-forwordlist/01-constructor}
+
+
+
+\section{线性数据结构+算法}
+
+% 冒泡排序
+% 选择性排序
+% 插入排序
+% 问题：vector 和 list中的sort是如何实现的？
+
+
+
+
+
+\section{非线性数据结构}
+\subsection{03-tree}
+% \include{01-datastruct/04-tree/01-binaryTree/..}
+% \include{01-datastruct/04-tree/02-BinarySearchTree/..}
+% \include{01-datastruct/04-tree/03-HeapTree/..}
+% \include{01-datastruct/04-tree/04-Red-blackTree/..}
+
+
+
+
+
+
+\section{非线性数据结构+算法}
+\include{01-datastruct/04-tree/04-map/00-map}
+\include{01-datastruct/04-tree/04-map/01-constructor}
+\include{01-datastruct/04-tree/04-map/02-at}
+\include{01-datastruct/04-tree/04-map/03-begin}
+
+
+
+
+\section{再探STL}
+
+
+\end{document}
+
+

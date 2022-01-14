@@ -1,0 +1,259 @@
+\documentclass{beamer}
+\usepackage{ctex, hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{listings} %c++插入代码
+\lstset{language=C++}%这条命令可以让LaTeX排版时将C++键字突出显示
+\lstset{breaklines}%这条命令可以让LaTeX自动将长的代码行换行排版
+%\lstset{extendedchars=false}%这一条命令可以解决代码跨页时，章节标题，页眉等汉字不显示的问题
+% \usepackage{animate}
+\usepackage{verbatim} %批量注释
+\newcommand{\SubItem}[1]{
+    {\setlength\itemindent{10pt} \item[-] #1}
+}
+
+\def\pgfsysdriver{pgfsys -dvipdfmx.def}
+\usepackage{tikz} %画图工具
+
+
+
+
+% other packages
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,pstricks,listings,stackengine}
+
+\author{{王佳琪}}
+\title{Introduction to OpenFOAM Programming}
+\subtitle{03 - Openfoam 数据结构}
+\institute{\kaishu{上海交通大学}}
+\date{\kaishu{2022年1月}}
+\usepackage{WUT}
+
+% defs
+\def\cmd#1{\texttt{\color{red}\footnotesize $\backslash$#1}}
+\def\env#1{\texttt{\color{blue}\footnotesize #1}}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},    % Custom highlighting style
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+
+\begin{document}
+
+\songti
+\begin{frame}
+    \titlepage
+    \begin{figure}[htpb]
+        \begin{center}
+            \includegraphics[width=0.15\linewidth]{pic/WUT.png}
+        \end{center}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
+\end{frame}
+
+
+
+
+
+%%~~~~~~~~~~~~~~~~~~~~~正文~~~~~~~~~~~~~~~~~~%%
+
+\section{primitives基础类}
+
+\include{03-primitives/00-总结}
+\include{03-primitives/01-int}
+\include{03-primitives/01-label}
+\include{03-primitives/02-char}
+\include{03-primitives/02-string}
+\include{03-primitives/03-List}
+\include{03-primitives/03-HashTable}
+\include{03-primitives/04-scalar}
+\include{03-primitives/04-vector}
+\include{03-primitives/04-tensor}
+
+\include{03-primitives/05-field}
+
+\section{openfoam class}
+% \begin{figure}[htpb]
+%     \includegraphics[width=1 \linewidth]{pic/04-架构图.png}
+%     % \caption{ \href{https://cpp.openfoam.org/v9/classFoam_1_1regIOobject.html}{\color{purple}{regIOobject 类继承关系}}}
+% \end{figure}
+
+- Space and time: polyMesh, fvMesh, Time\\
+- Field algebra: Field, DimensionedField and GeometricField\\
+- Boundary conditions: fvPatchField and derived classes\\
+- Sparse matrices: IduMatrix, fvMatrix and linear solvers\\
+- Finite Volume discretisation: fvc and fvm namespace\\
+% https://www.youtube.com/watch?v=6NjE06lX9js&list=PLtlltkn_UCCzF7aGmBZ66CzK48ipi1El6&index=3
+
+\section{openfoam模式设计}
+
+\include{03-primitives/06-lookup}
+\include{03-primitives/07-ObjectRegistry}
+
+
+
+
+
+
+
+
+
+% \include{03-primitives/t1}
+
+
+
+
+
+
+
+
+
+
+% \begin{frame}[fragile]{Circulator}
+%     \begin{figure}[htpb]
+%         \centering
+%         \begin{tikzpicture}
+
+%             \def \n {4}
+%             \def \radius {1cm}
+%             \def \margin {20} % margin in angles, depends on the radius
+
+%             \foreach \s in {1,...,\n}
+%             {
+%             \node[draw, circle] at ({360/\n * (\s - 1)}:\radius) {\s};
+%             \draw[->, >=latex] ({360/\n * (\s - 1)+\margin}:\radius)
+%             arc ({360/\n * (\s - 1)+\margin}:{360/\n * (\s)-\margin}:\radius);
+%             }
+%         \end{tikzpicture}
+
+%         \begin{tikzpicture}
+%             \tikzset{
+%                 box/.style ={
+%                         rectangle, %矩形节点
+%                         rounded corners =5pt, %圆角
+%                         minimum width =50pt, %最小宽度
+%                         minimum height =20pt, %最小高度
+%                         inner sep=5pt, %文字和边框的距离
+%                         draw=blue %边框颜色}
+%                     }
+%             }
+%             \node[box] (1) at(0,0) {cStart.prev()};
+%             \node[box] (2) at(3,0) {cStart()};
+%             \node[box] (3) at(6,0) {cStart.next()};
+%             \draw[->] (1)--(2);
+%             \draw[->] (2)--(3);
+%             % \node at(2,1) {a};
+%             % \node at(6,1) {b};
+%         \end{tikzpicture}
+%         \caption{Circulator数据结构}
+%     \end{figure}
+
+%     \begin{lstlisting}[basicstyle=\tiny]
+%     cStart.circulate(CirculatorBase::direction::clockwise)
+%     cStart.size() == 4
+%       \end{lstlisting}
+
+%     %%04-doc:
+%     \tiny{
+%         \href {
+
+%             https://github.com/OpenFOAM/OpenFOAM-9/blob/master/applications/test/Circulator/Test-Circulator.C
+
+%         }{\color{purple}{02-doc}}}
+
+
+% \end{frame}
+
+
+% \begin{frame}[fragile]{CompactIOList for faceList}
+%     \begin{minipage}{0.45\linewidth}
+%         \begin{lstlisting}[basicstyle=\tiny,caption={Old format},captionpos=b]
+% faceIOList faces2
+% (
+%     IOobject
+%     (
+%         "faces2",
+%         runTime.constant(),
+%         polyMesh::meshSubDir,
+%         runTime,
+%         IOobject::NO_READ,
+%         IOobject::NO_WRITE,
+%         false
+%     ),
+%     size
+% );
+%         \end{lstlisting}
+%     \end{minipage}
+%     %
+%     \begin{minipage}{0.45\linewidth}
+%         \begin{lstlisting}[basicstyle=\tiny,caption={New format},captionpos=b]
+% faceCompactIOList faces2
+% (
+%     IOobject
+%     (
+%         "faces2",
+%         runTime.constant(),
+%         polyMesh::meshSubDir,
+%         runTime,
+%         IOobject::NO_READ,
+%         IOobject::NO_WRITE,
+%         false
+%     ),
+%     size
+% );
+% \end{lstlisting}
+%     \end{minipage}
+
+
+%     %%04-doc:
+%     \tiny{
+%         \href {
+
+%             https://github.com/OpenFOAM/OpenFOAM-9/blob/master/applications/test/CompactIOList/Test-CompactIOList.C
+
+%         }{\color{purple}{02-doc}}}
+
+% \end{frame}
+
+
+
+% \begin{frame}[fragile]{CompactListList}
+
+
+
+
+
+%     %%04-doc:
+%     \tiny{
+%         \href {
+
+%             https://github.com/OpenFOAM/OpenFOAM-9/blob/master/applications/test/CompactListList/Test-CompactListList.C
+
+%         }{\color{purple}{02-doc}}}
+
+
+% \end{frame}
+% \include{01-datastruct/00-dataStruct/01-memory}
+% \include{01-datastruct/00-dataStruct/02-iterator}
+% \include{01-datastruct/00-dataStruct/00-dataStruct}
+% \include{01-datastruct/00-dataStruct/03-线性数据结构}
+% \include{01-datastruct/00-dataStruct/04-非线性数据结构}
+
+
+
+\end{document}
+
+

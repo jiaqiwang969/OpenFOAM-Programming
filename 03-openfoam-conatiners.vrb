@@ -1,0 +1,10 @@
+\frametitle{树状结构的管理-树状结构的写入}
+\small{
+        根节点为 Time 类型，通常只有为 fvMesh （及其派生）类型的子节点，其他节点都放在 mesh 底下。求解器中的 runTime.write() 触发了树状结构的写入操作。该函数实际调用的是 regIOobject::write()，而这个函数又将调用 Time::writeObject 函数：\\}
+    \tiny{
+    1. 先通过 controlDict 中设置的参数判断当前时刻是否为需要写入，若需要则继续；\\
+    2. 调用 writeTimeDict 函数，往 [time]/uniform/time 文件中写入和时间相关的变量；\\
+    3. 调用 objectRegistry::writeObject 函数，这个函数将判断子节点的 wOpt\_ 属性，若不为 NO\_WRITE 则调用子节点的 writeObject 函数；\\
+    4. 对于 runTime 对象，调用 mesh 子节点的 writeObject 函数，该函数先写入网格相关数据（动网格相关），再调用 polyMesh::writeObject 函数，该函数没有重写，实际调用的是父类中的函数 objectRegistry::writeObject ，递归遍历 mesh 节点下子节点的 writeObject 函数;\\
+    5. 最后是 purgeWrite 的相关操作。
+    }
